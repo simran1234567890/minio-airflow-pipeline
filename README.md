@@ -2,7 +2,7 @@
 
 This project implements an event-driven data pipeline that automatically compresses files uploaded to MinIO using Airflow DAGs triggered by webhook events.
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 ```
 File Upload → MinIO → Webhook → Airflow DAG → Compression → Email Notification
@@ -72,7 +72,7 @@ mc mb local/compressed-files
 mc event add local/testing-files arn:minio:sqs::webhook:webhook --event put
 ```
 
-## 🔧 Service URLs & Credentials
+##  Service URLs & Credentials
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
@@ -157,7 +157,7 @@ curl http://localhost:8080/health
 curl http://localhost:5000/health
 ```
 
-## ⚙️ Configuration
+##  Configuration
 
 ### Environment Variables
 The webhook server uses these environment variables:
@@ -214,14 +214,14 @@ docker-compose down --rmi all
 ./setup.sh
 ```
 
-## 📈 Scaling Considerations
+##  Scaling Considerations
 
 - **Multiple Workers**: Add more Airflow workers in `docker-compose.yml`
 - **Load Balancing**: Use nginx for webhook load balancing
 - **Persistence**: Mount MinIO data to host volumes
 - **Monitoring**: Add Prometheus/Grafana for metrics
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -229,6 +229,6 @@ docker-compose down --rmi all
 4. Test thoroughly
 5. Submit a pull request
 
-## 📄 License
+##  License
 
 This project is open source and available under the MIT License. 
