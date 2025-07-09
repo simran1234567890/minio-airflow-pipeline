@@ -81,7 +81,7 @@ mc event add local/testing-files arn:minio:sqs::webhook:webhook --event put
 | **Airflow** | http://localhost:8080 | `airflow` / `airflow` |
 | **Webhook** | http://localhost:5000 | No authentication |
 
-## 📋 Workflow Details
+## Workflow Details
 
 ### 1. File Upload Trigger
 When a file is uploaded to the `testing-files` bucket in MinIO:
@@ -132,7 +132,7 @@ mc cp test.txt local/testing-files/
 - **DAG runs**: Check Airflow UI at http://localhost:8080
 - **Email**: Check your inbox for compression notification
 
-## 🔍 Monitoring & Debugging
+##  Monitoring & Debugging
 
 ### View Logs
 ```bash
@@ -178,7 +178,7 @@ server.sendmail(sender_email, recipient_email, text)
 server.quit()
 ```
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
