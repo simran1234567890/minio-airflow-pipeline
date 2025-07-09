@@ -1,0 +1,18 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore environment files and secrets
+.env
+*.env
+
+# Ignore Airflow logs
+logs/
+
+# Ignore Docker volumes
+minio_data/
+postgres-db-volume/
+
+# Ignore test scripts
+*.log
+test_gmail.py 
