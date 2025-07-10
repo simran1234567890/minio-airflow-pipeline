@@ -1,4 +1,4 @@
-# 🚀 Quick Start Guide
+# Quick Start Guide
 
 ## 1. Start the Pipeline
 
@@ -54,7 +54,7 @@ mc ls local/compressed-files/
 3. Find compressed file in `compressed-files` bucket
 4. Check logs for email notifications
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ```bash
 # View logs
