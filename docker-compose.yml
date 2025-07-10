@@ -11,6 +11,8 @@ services:
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_NOTIFY_WEBHOOK_ENABLE: "on"
+      MINIO_NOTIFY_WEBHOOK_ENDPOINT: "http://webhook:5000/"
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
@@ -32,9 +34,17 @@ services:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
       - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
       - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
-      - AIRFLOW__CORE__FERNET_KEY=''
+      - AIRFLOW__CORE__FERNET_KEY=WEWYRlb0wUhGStcVaiUTt154wVlXP3sP4TBNDtJ9NTs=
       - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__SMTP__SMTP_HOST=smtp.gmail.com
+      - AIRFLOW__SMTP__SMTP_STARTTLS=True
+      - AIRFLOW__SMTP__SMTP_SSL=False
+      - AIRFLOW__SMTP__SMTP_USER=simranpandey107@gmail.com
+      - AIRFLOW__SMTP__SMTP_PASSWORD=dxwvouiswfbclfzd
+      - AIRFLOW__SMTP__SMTP_PORT=587
+      - AIRFLOW__SMTP__SMTP_MAIL_FROM=simranpandey107@gmail.com
+      - AIRFLOW__API__AUTH_BACKEND=airflow.api.auth.backend.basic_auth
 
     volumes:
       - ./dags:/opt/airflow/dags
@@ -44,8 +54,8 @@ services:
       - "8080:8080"
     command: webserver
     healthcheck:
-      test: ["CMD-SHELL", "[ $$(curl -s http://localhost:8080/health) = 'healthy' ]"]
-      interval: 10s
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
       timeout: 10s
       retries: 5
     restart: always
@@ -61,9 +71,17 @@ services:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
       - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
       - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
-      - AIRFLOW__CORE__FERNET_KEY=''
+      - AIRFLOW__CORE__FERNET_KEY=WEWYRlb0wUhGStcVaiUTt154wVlXP3sP4TBNDtJ9NTs=
       - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__SMTP__SMTP_HOST=smtp.gmail.com
+      - AIRFLOW__SMTP__SMTP_STARTTLS=True
+      - AIRFLOW__SMTP__SMTP_SSL=False
+      - AIRFLOW__SMTP__SMTP_USER=simranpandey107@gmail.com
+      - AIRFLOW__SMTP__SMTP_PASSWORD=dxwvouiswfbclfzd
+      - AIRFLOW__SMTP__SMTP_PORT=587
+      - AIRFLOW__SMTP__SMTP_MAIL_FROM=simranpandey107@gmail.com
+      - AIRFLOW__API__AUTH_BACKEND=airflow.api.auth.backend.basic_auth
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
@@ -82,7 +100,15 @@ services:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
       - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
       - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
-      - AIRFLOW__CORE__FERNET_KEY=''
+      - AIRFLOW__CORE__FERNET_KEY=WEWYRlb0wUhGStcVaiUTt154wVlXP3sP4TBNDtJ9NTs=
+      - AIRFLOW__SMTP__SMTP_HOST=smtp.gmail.com
+      - AIRFLOW__SMTP__SMTP_STARTTLS=True
+      - AIRFLOW__SMTP__SMTP_SSL=False
+      - AIRFLOW__SMTP__SMTP_USER=simranpandey107@gmail.com
+      - AIRFLOW__SMTP__SMTP_PASSWORD=dxwvouiswfbclfzd
+      - AIRFLOW__SMTP__SMTP_PORT=587
+      - AIRFLOW__SMTP__SMTP_MAIL_FROM=simranpandey107@gmail.com
+      - AIRFLOW__API__AUTH_BACKEND=airflow.api.auth.backend.basic_auth
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
@@ -124,11 +150,11 @@ services:
       dockerfile: Dockerfile
     container_name: webhook
     ports:
-      - "5050:5050"
+      - "5050:5000"
     environment:
       - AIRFLOW_API_URL=http://airflow-webserver:8080
-      - AIRFLOW_USERNAME=airflow
-      - AIRFLOW_PASSWORD=airflow
+      - AIRFLOW_USERNAME=admin
+      - AIRFLOW_PASSWORD=admin
     depends_on:
       - airflow-webserver
     restart: always
